@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +28,7 @@ public class LoginController {
                             @RequestParam(required = false) String logout,
                             HttpSession session,
                             Model model) {
-        if (session.getAttribute("token") != null) return "redirect:/page/dashboard";
+        if (session.getAttribute("token") != null) return "redirect:/admin/dashboard";
         if (error  != null) model.addAttribute("error",   "Invalid username or password.");
         if (logout != null) model.addAttribute("message", "You have been logged out.");
         return "pages/login";
@@ -62,7 +64,7 @@ public class LoginController {
                     session.setAttribute("token",    token);
                     session.setAttribute("username", username);
                     session.setAttribute("role",     role);
-                    return "redirect:/page/dashboard";
+                    return "redirect:/admin/dashboard";
                 }
             }
             model.addAttribute("error", "Login failed: backend returned no token.");
