@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login – Food Admin</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.10);
+            padding: 48px 40px;
+            width: 100%; max-width: 400px;
+        }
+        h1 { font-size: 1.6rem; color: #1a1a2e; margin-bottom: 6px; }
+        .subtitle { color: #6b7280; font-size: .9rem; margin-bottom: 28px; }
+        .alert {
+            padding: 10px 14px; border-radius: 8px;
+            font-size: .88rem; margin-bottom: 18px;
+        }
+        .alert-error   { background: #fee2e2; color: #b91c1c; }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        label { display: block; font-size: .85rem; font-weight: 600;
+                color: #374151; margin-bottom: 6px; }
+        input[type=text], input[type=password] {
+            width: 100%; padding: 11px 14px;
+            border: 1.5px solid #d1d5db; border-radius: 8px;
+            font-size: .95rem; outline: none; transition: border .2s;
+            margin-bottom: 18px;
+        }
+        input:focus { border-color: #4f46e5; }
+        button[type=submit] {
+            width: 100%; padding: 12px;
+            background: #4f46e5; color: #fff;
+            border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: background .2s;
+        }
+        button[type=submit]:hover { background: #4338ca; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🍔 Food Admin</h1>
+    <p class="subtitle">Sign in to continue</p>
+
+    <!-- Error / success alerts -->
+    <div th:if="${error}"   class="alert alert-error"   th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <!--
+        Action → /do-login  (our LoginController @PostMapping)
+        NOT /login, so Spring Security's form-login filter is bypassed.
+    -->
+    <form action="/do-login" method="post">
+        <label for="username">Username</label>
+        <input id="username" type="text"     name="username" placeholder="Enter username" required/>
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" placeholder="Enter password" required/>
+
+        <button type="submit">Sign In</button>
+    </form>
+</div>
+</body>
+</html>

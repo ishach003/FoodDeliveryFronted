@@ -201,7 +201,7 @@ function animateCount(el, target) {
     }, 30);
 }
 
-// ── Logout ────────────────────────────────────────────────────────────
+// Logout ────────────────────────────────────────────────────────────
 function logout() {
     Auth.clear();
     fetch('/logout', { method: 'POST', credentials: 'same-origin' })
