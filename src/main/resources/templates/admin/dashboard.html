@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Admin Dashboard')"></head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar('admin')"></div>
+
+<main>
+
+    <!-- HEADER -->
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Administration</div>
+        <div class="page-title">Admin Dashboard</div>
+    </div>
+
+    <!-- QUICK NAV -->
+    <div class="table-card fade-up delay-2">
+        <div class="table-card-header">
+            <span class="table-card-title">Quick Navigation</span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Module</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <!-- Orders  -->
+            <tr>
+                <td style="font-weight:600;">📦 Orders</td>
+                <td style="color:var(--muted);">View and search customer orders</td>
+                <td>
+                    <a th:href="@{/admin/orders}" class="btn btn-primary">Open →</a>
+                </td>
+            </tr>
+
+            <!--  Customers -->
+            <tr>
+                <td style="font-weight:600;">👥 Customers</td>
+                <td style="color:var(--muted);">View all customers</td>
+                <td>
+                    <a th:href="@{/admin/customers}" class="btn btn-primary">Open →</a>
+                </td>
+            </tr>
+
+            <!-- Products -->
+            <tr>
+                <td style="font-weight:600;">🛍️ Products</td>
+                <td style="color:var(--muted);">Manage products</td>
+                <td>
+                    <a th:href="@{/admin/products}" class="btn btn-primary">Open →</a>
+                </td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

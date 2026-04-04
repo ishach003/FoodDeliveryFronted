@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Customer Addresses')"></head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar('addresses')"></div>
+
+<main>
+
+    <!-- HEADER -->
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Customer Module</div>
+        <div class="page-title">Delivery Addresses</div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-card fade-up delay-1">
+        <form method="post" th:action="@{/customer/address}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+            <div class="input-group">
+                <label>Customer ID</label>
+                <input type="number" name="customerId"
+                       placeholder="Enter customer ID…"
+                       th:value="${customerId}"
+                       min="1" required/>
+            </div>
+            <button type="submit" class="btn btn-primary">📍 Find Addresses</button>
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    <div th:if="${addresses != null}" class="fade-up delay-2">
+
+        <div class="table-card">
+
+            <!-- HEADER -->
+            <div class="table-card-header">
+                <span class="table-card-title">
+                    Addresses for Customer #<span th:text="${customerId}"></span>
+                </span>
+                <span class="count-badge" th:text="${addresses.size()} + ' found'"></span>
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div th:if="${addresses.isEmpty()}" class="empty-state">
+                <span class="icon">📭</span>
+                <p>No addresses found for this customer.</p>
+            </div>
+
+            <!-- TABLE -->
+            <table th:unless="${addresses.isEmpty()}">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Address Line 1</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Postal Code</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="addr : ${addresses}">
+
+                    <td style="color:var(--muted);" th:text="${addr.addressId}"></td>
+
+
+                    <td th:text="${addr.street != null ? addr.street : '-'}"></td>
+
+                    <td th:text="${addr.city != null ? addr.city : '-'}"></td>
+
+                    <td th:text="${addr.state != null ? addr.state : '-'}"></td>
+
+                    <td>
+                            <span class="badge badge-blue"
+                                  th:text="${addr.zipCode != null ? addr.zipCode : '-'}">
+                            </span>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+
+</body>
+</html>

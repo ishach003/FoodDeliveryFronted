@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Customer Orders')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar('orders')"></div>
+<main>
+
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Customer Module</div>
+        <div class="page-title">Customer Orders</div>
+    </div>
+
+    <div class="search-card fade-up delay-1">
+        <form method="post" th:action="@{/customer/orders}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+            <div class="input-group">
+                <label>Customer ID</label>
+                <input type="number" name="customerId" placeholder="Enter customer ID…" th:value="${customerId}" min="1" required/>
+            </div>
+            <button type="submit" class="btn btn-primary">📦 Get Orders</button>
+        </form>
+    </div>
+
+    <div th:if="${orders != null}">
+        <div class="table-card fade-up delay-2">
+            <div class="table-card-header">
+                <span class="table-card-title">Orders for Customer #<span th:text="${customerId}"></span></span>
+                <span class="count-badge" th:text="${orders.size()} + ' orders'"></span>
+            </div>
+            <div th:if="${orders.isEmpty()}" class="empty-state">
+                <span class="icon">📭</span><p>No orders found.</p>
+            </div>
+            <table th:unless="${orders.isEmpty()}">
+                <thead><tr><th>Order ID</th><th>Restaurant</th><th>Status</th><th>Total</th><th>Time</th></tr></thead>
+                <tbody>
+                    <tr th:each="o : ${orders}">
+                        <td style="font-family:'Syne',sans-serif;font-weight:700;" th:text="'#' + ${o.orderId}"></td>
+                        <td th:text="${o.restaurantId}"></td>
+                        <td>
+                            <span th:if="${o.status == 'DELIVERED'}"   class="badge badge-green"  th:text="${o.status}"></span>
+                            <span th:if="${o.status == 'CANCELLED'}"  class="badge badge-red"    th:text="${o.status}"></span>
+                            <span th:if="${o.status == 'PENDING'}"    class="badge badge-orange" th:text="${o.status}"></span>
+                            <span th:unless="${o.status == 'DELIVERED' or o.status == 'CANCELLED' or o.status == 'PENDING'}" class="badge badge-blue" th:text="${o.status}"></span>
+                        </td>
+                        <td style="color:var(--accent);font-weight:600;">₹<span th:text="${o.totalAmount}"></span></td>
+                        <td style="color:var(--muted);font-size:13px;" th:text="${o.orderTime}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
