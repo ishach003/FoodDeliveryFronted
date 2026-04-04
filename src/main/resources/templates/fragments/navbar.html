@@ -1,0 +1,15 @@
+<nav th:fragment="navbar(activePage)" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="nav-brand">
+        <span class="dot"></span>
+        FoodCore
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/}"               th:classappend="${activePage == 'home'}       ? ' active' : ''">Home</a>
+        <a th:href="@{/orders}"         th:classappend="${activePage == 'orders'}     ? ' active' : ''">Orders</a>
+        <a th:href="@{/customer/address}" th:classappend="${activePage == 'addresses'} ? ' active' : ''">Addresses</a>
+        <a th:href="@{/restaurant}"     th:classappend="${activePage == 'restaurant'} ? ' active' : ''">Restaurants</a>
+        <a th:href="@{/driver}"         th:classappend="${activePage == 'driver'}     ? ' active' : ''">Drivers</a>
+        <a th:href="@{/ratings}"        th:classappend="${activePage == 'rating'}     ? ' active' : ''">Ratings</a>
+        <a th:href="@{/admin/dashboard}" th:classappend="${activePage == 'admin'}     ? ' active' : ''">Admin</a>
+    </div>
+</nav>
