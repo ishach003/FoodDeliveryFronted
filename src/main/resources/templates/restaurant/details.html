@@ -11,7 +11,6 @@
         <div class="page-title">Restaurant Details</div>
     </div>
 
-    <!-- 🔍 SEARCH -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;" class="fade-up delay-1">
 
         <div class="search-card" style="flex-direction:column;gap:16px;">
@@ -40,7 +39,6 @@
 
     </div>
 
-    <!-- ✅ RESTAURANT DETAILS -->
     <div th:if="${restaurant != null}" class="detail-card fade-up delay-2">
 
         <div style="margin-bottom:28px;">
@@ -76,7 +74,7 @@
         </div>
     </div>
 
-    <!-- ✅ MENU -->
+
     <div th:if="${menuItems != null and !menuItems.isEmpty()}" class="table-card fade-up delay-3" style="margin-top:24px;">
 
         <div class="table-card-header">

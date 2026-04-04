@@ -1,0 +1,20 @@
+<th:block th:fragment="scripts">
+<script>
+(function() {
+    // Animate rows in on load
+    document.querySelectorAll('tbody tr').forEach((tr, i) => {
+        tr.style.animationDelay = (i * 0.04) + 's';
+        tr.classList.add('fade-up');
+    });
+
+    // Auto-dismiss alerts
+    document.querySelectorAll('.alert').forEach(el => {
+        setTimeout(() => {
+            el.style.transition = 'opacity 0.5s';
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 500);
+        }, 5000);
+    });
+})();
+</script>
+</th:block>
