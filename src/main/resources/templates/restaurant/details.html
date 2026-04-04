@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Restaurant Details')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar('restaurant')"></div>
+
+<main>
+
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Restaurant Module</div>
+        <div class="page-title">Restaurant Details</div>
+    </div>
+
+    <!-- 🔍 SEARCH -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;" class="fade-up delay-1">
+
+        <div class="search-card" style="flex-direction:column;gap:16px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">🍽️ Restaurant Info</div>
+
+            <form method="post" th:action="@{/restaurant/lookup}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+                <div class="input-group">
+                    <label>Restaurant ID</label>
+                    <input type="number" name="restaurantId" placeholder="e.g. 1" min="1" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">Find</button>
+            </form>
+        </div>
+
+        <div class="search-card" style="flex-direction:column;gap:16px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">📋 View Menu</div>
+
+            <form method="post" th:action="@{/restaurant/menu}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+                <div class="input-group">
+                    <label>Restaurant ID</label>
+                    <input type="number" name="restaurantId" placeholder="e.g. 1" min="1" required/>
+                </div>
+                <button type="submit" class="btn btn-secondary">Menu →</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- ✅ RESTAURANT DETAILS -->
+    <div th:if="${restaurant != null}" class="detail-card fade-up delay-2">
+
+        <div style="margin-bottom:28px;">
+            <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;"
+                 th:text="${restaurant.name}">Restaurant Name</div>
+
+            <div style="color:var(--muted);margin-top:6px;"
+                 th:text="${restaurant.restaurantAddress}">Address</div>
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-field">
+                <label>Restaurant ID</label>
+                <div class="value" th:text="${restaurant.restaurantId}">—</div>
+            </div>
+
+            <div class="detail-field">
+                <label>Name</label>
+                <div class="value" th:text="${restaurant.name}">—</div>
+            </div>
+
+            <div class="detail-field">
+                <label>Address</label>
+                <div class="value" th:text="${restaurant.restaurantAddress}">—</div>
+            </div>
+
+            <div class="detail-field">
+                <label>Phone</label>
+                <div class="value" th:text="${restaurant.restaurantPhone}">—</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ✅ MENU -->
+    <div th:if="${menuItems != null and !menuItems.isEmpty()}" class="table-card fade-up delay-3" style="margin-top:24px;">
+
+        <div class="table-card-header">
+            <span class="table-card-title">Menu</span>
+            <span class="count-badge" th:text="${menuItems.size()} + ' items'"></span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Available</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="item : ${menuItems}">
+                <td style="font-weight:600;" th:text="${item.itemName}"></td>
+                <td><span class="badge badge-blue" th:text="${item.category}"></span></td>
+                <td style="color:var(--muted);font-size:13px;" th:text="${item.description}"></td>
+                <td style="color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;">
+                    ₹<span th:text="${item.price}"></span>
+                </td>
+                <td>
+                    <span th:if="${item.available}" class="badge badge-green">✓ Yes</span>
+                    <span th:unless="${item.available}" class="badge badge-red">✗ No</span>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+</main>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
