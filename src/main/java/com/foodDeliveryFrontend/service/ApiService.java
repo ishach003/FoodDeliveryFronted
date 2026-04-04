@@ -68,7 +68,7 @@ public class ApiService {
     }
 
     public List<CustomerAddressDto> getCustomerAddress(Integer customerId) {
-        return getList(baseUrl + "/api/v1/customer/" + customerId + "/addresses", CustomerAddressDto.class);
+        return getList(baseUrl + "/api/customer/" + customerId + "/addresses", CustomerAddressDto.class);
     }
 
     public DeliveryDriverDto getDriverById(Integer driverId) {
@@ -101,25 +101,12 @@ public class ApiService {
         return getList(baseUrl + "/api/rating/restaurant/" + restaurantId, RatingDto.class);
     }
     public RestaurantResponseDto getRestaurantById(Integer id) {
-        return get(baseUrl + "/api/restaurants/" + id, RestaurantResponseDto.class);
+        return get(baseUrl + "/restaurants/" + id, RestaurantResponseDto.class);
     }
     // GET /api/orders
     public List<OrderDto> getAllOrders() {
         return getList(baseUrl + "/api/orders", OrderDto.class);
     }
 
-    // GET /api/customers
-    public List<Object> getAllCustomers() {
-        return getList(baseUrl + "/api/customers", Object.class);
-    }
 
-    // GET /api/restaurants
-    public List<RestaurantResponseDto> getAllRestaurants() {
-        return getList(baseUrl + "/api/restaurants", RestaurantResponseDto.class);
-    }
-
-    // GET /api/drivers
-    public List<DeliveryDriverDto> getAllDrivers() {
-        return getList(baseUrl + "/api/drivers", DeliveryDriverDto.class);
-    }
 }
