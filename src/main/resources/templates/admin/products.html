@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Products')"></head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar('admin')"></div>
+
+<main>
+
+    <!-- HEADER -->
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Administration</div>
+        <div class="page-title">Products</div>
+    </div>
+
+    <!-- SEARCH CARD -->
+    <div class="search-card fade-up delay-1">
+        <form method="get" th:action="@{/admin/products}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+            <div class="input-group">
+                <label>Restaurant ID</label>
+                <input type="number" name="restaurantId" placeholder="Enter restaurant ID…"
+                       th:value="${restaurantId}" min="1" required/>
+            </div>
+            <button type="submit" class="btn btn-primary">🛍️ Get Menu Items</button>
+        </form>
+    </div>
+
+    <!-- MENU ITEMS RESULT -->
+    <div th:if="${menuItems != null}">
+        <div class="table-card fade-up delay-2">
+            <div class="table-card-header">
+                <span class="table-card-title">Menu Items for Restaurant #<span th:text="${restaurantId}"></span></span>
+                <span class="count-badge" th:text="${menuItems.size()} + ' item(s)'"></span>
+            </div>
+            <div th:if="${menuItems.isEmpty()}" class="empty-state">
+                <span class="icon">📭</span><p>No menu items found for this restaurant.</p>
+            </div>
+            <table th:unless="${menuItems.isEmpty()}">
+                <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Available</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${menuItems}">
+                    <td style="font-family:'Syne',sans-serif;font-weight:700;" th:text="'#' + ${item.itemId}"></td>
+                    <td style="font-weight:600;" th:text="${item.itemName}"></td>
+                    <td>
+                        <span class="badge badge-blue" th:text="${item.category != null ? item.category : '—'}"></span>
+                    </td>
+                    <td style="color:var(--muted);font-size:13px;" th:text="${item.description != null ? item.description : '—'}"></td>
+                    <td style="color:var(--accent);font-weight:600;">₹<span th:text="${item.price}"></span></td>
+                    <td>
+                        <span th:if="${item.available}"   class="badge badge-green">Available</span>
+                        <span th:unless="${item.available}" class="badge badge-red">Unavailable</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
