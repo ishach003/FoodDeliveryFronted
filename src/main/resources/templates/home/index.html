@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Home')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar('home')"></div>
+<main>
+
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Welcome</div>
+        <div class="page-title">Food Delivery<br>Command Centre</div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card fade-up delay-1">
+            <div class="stat-label">Orders Module</div>
+            <div class="stat-value" style="color:var(--accent)">📦</div>
+            <p style="margin-top:10px;font-size:13px;color:var(--muted)">Look up customer orders by ID</p>
+            <a th:href="@{/orders}" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Go →</a>
+        </div>
+        <div class="stat-card fade-up delay-1">
+            <div class="stat-label">Addresses Module</div>
+            <div class="stat-value" style="color:var(--blue)">📍</div>
+            <p style="margin-top:10px;font-size:13px;color:var(--muted)">Fetch delivery addresses per customer</p>
+            <a th:href="@{/customer/address}" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Go →</a>
+        </div>
+        <div class="stat-card fade-up delay-2">
+            <div class="stat-label">Restaurants Module</div>
+            <div class="stat-value" style="color:var(--green)">🍽️</div>
+            <p style="margin-top:10px;font-size:13px;color:var(--muted)">View restaurant info &amp; menus</p>
+            <a th:href="@{/restaurant}" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Go →</a>
+        </div>
+        <div class="stat-card fade-up delay-2">
+            <div class="stat-label">Drivers Module</div>
+            <div class="stat-value" style="color:var(--accent2)">🚴</div>
+            <p style="margin-top:10px;font-size:13px;color:var(--muted)">Track delivery driver status</p>
+            <a th:href="@{/driver}" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Go →</a>
+        </div>
+        <div class="stat-card fade-up delay-3">
+            <div class="stat-label">Ratings Module</div>
+            <div class="stat-value" style="color:#ffc107">⭐</div>
+            <p style="margin-top:10px;font-size:13px;color:var(--muted)">Browse restaurant ratings</p>
+            <a th:href="@{/ratings}" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Go →</a>
+        </div>
+    </div>
+
+</main>
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
