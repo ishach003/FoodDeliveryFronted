@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Restaurant Ratings')"></head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar('rating')"></div>
+
+<main>
+
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Ratings Module</div>
+        <div class="page-title">Restaurant Ratings</div>
+    </div>
+
+    <!-- Search Form -->
+    <div class="search-card fade-up delay-1">
+        <form method="post" th:action="@{/ratings/restaurant}"
+              style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+
+            <div class="input-group">
+                <label>Restaurant ID</label>
+                <input type="number" name="restaurantId"
+                       placeholder="Enter restaurant ID…"
+                       th:value="${restaurantId}" min="1" required/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">⭐ Get Ratings</button>
+        </form>
+    </div>
+
+    <!-- Results -->
+    <div th:if="${ratings != null}">
+        <div class="table-card fade-up delay-2">
+
+            <div class="table-card-header">
+                <span class="table-card-title">
+                    Ratings for Restaurant #<span th:text="${restaurantId}"></span>
+                </span>
+                <span class="count-badge"
+                      th:text="${ratings.size()} + ' ratings'"></span>
+            </div>
+
+            <!-- Empty case -->
+            <div th:if="${ratings.isEmpty()}" class="empty-state">
+                <span class="icon">💬</span>
+                <p>No ratings yet for this restaurant.</p>
+            </div>
+
+            <!-- Table -->
+            <table th:unless="${ratings.isEmpty()}">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order ID</th>
+                    <th>Score</th>
+                    <th>Review</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="r : ${ratings}">
+                    <td th:text="${r.ratingId}"></td>
+                    <td th:text="${r.orderId}"></td>
+
+                    <td>
+                            <span style="color:#ffc107;font-weight:700;"
+                                  th:text="${r.rating} + '★'"></span>
+                    </td>
+
+                    <td style="color:var(--muted);font-style:italic;"
+                        th:text="${r.comment}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
