@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Orders')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar('orders')"></div>
+<main>
+
+    <div class="page-header fade-up">
+        <div class="page-eyebrow">Order Management</div>
+        <div class="page-title">Orders</div>
+    </div>
+
+    <!-- Search Panels -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;" class="fade-up delay-1">
+
+        <!-- By Customer ID -->
+        <div class="search-card" style="flex-direction:column;gap:16px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">🔍 Orders by Customer</div>
+            <form method="post" th:action="@{/orders/customer}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+                <div class="input-group">
+                    <label>Customer ID</label>
+                    <input type="number" name="customerId" placeholder="e.g. 101" th:value="${customerId}" min="1" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">Fetch</button>
+            </form>
+        </div>
+
+        <!-- By Order ID -->
+        <div class="search-card" style="flex-direction:column;gap:16px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">🧾 Single Order Detail</div>
+            <form method="post" th:action="@{/orders/detail}" style="display:flex;gap:12px;align-items:flex-end;width:100%;">
+                <div class="input-group">
+                    <label>Order ID</label>
+                    <input type="number" name="orderId" placeholder="e.g. 55" min="1" required/>
+                </div>
+                <button type="submit" class="btn btn-secondary">Look Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SHOW ORDER DETAILS -->
+    <div th:if="${mode == 'single' and order != null}" class="detail-card fade-up delay-2">
+
+        <div class="table-card-header" style="padding:0 0 20px 0;border-bottom:1px solid var(--border);margin-bottom:24px;">
+            <span class="table-card-title">Order #<span th:text="${order.orderId}"></span></span>
+
+            <span th:if="${order.status == 'DELIVERED'}" class="badge badge-green" th:text="${order.status}"></span>
+            <span th:if="${order.status == 'CANCELLED'}" class="badge badge-red" th:text="${order.status}"></span>
+            <span th:if="${order.status == 'PENDING'}" class="badge badge-orange" th:text="${order.status}"></span>
+            <span th:unless="${order.status == 'DELIVERED' or order.status == 'CANCELLED' or order.status == 'PENDING'}"
+                  class="badge badge-blue" th:text="${order.status}"></span>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-field"><label>Order ID</label><div class="value" th:text="${order.orderId}"></div></div>
+            <div class="detail-field"><label>Customer ID</label><div class="value" th:text="${order.customerId}"></div></div>
+            <div class="detail-field"><label>Restaurant ID</label><div class="value" th:text="${order.restaurantId}"></div></div>
+            <div class="detail-field"><label>Status</label><div class="value" th:text="${order.status}"></div></div>
+            <div class="detail-field">
+                <label>Order Time</label>
+                <div class="value"
+                     th:text="${#temporals.format(order.orderTime, 'dd MMM yyyy, hh:mm a')}"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SHOW WHEN ORDER NOT FOUND -->
+    <div th:if="${mode == 'single' and order == null}" class="empty-state fade-up delay-2">
+        <span class="icon">📭</span>
+        <p>No order found with this ID.</p>
+    </div>
+
+    <!-- Customer orders list -->
+    <div th:if="${mode == 'list' and orders != null}" class="table-card fade-up delay-2">
+        <div class="table-card-header">
+            <span class="table-card-title">Orders for Customer #<span th:text="${customerId}"></span></span>
+            <span class="count-badge" th:text="${orders.size()} + ' orders'"></span>
+        </div>
+        <div th:if="${orders.isEmpty()}" class="empty-state">
+            <span class="icon">📭</span>
+            <p>No orders found for this customer.</p>
+        </div>
+        <table th:unless="${orders.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>Order ID</th><th>Restaurant</th><th>Status</th><th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="o : ${orders}">
+                <td style="font-family:'Syne',sans-serif;font-weight:700;" th:text="'#' + ${o.orderId}"></td>
+                <td th:text="${o.restaurantId}"></td>
+                <td>
+                    <span th:if="${o.status == 'DELIVERED'}"   class="badge badge-green"  th:text="${o.status}"></span>
+                    <span th:if="${o.status == 'CANCELLED'}"  class="badge badge-red"    th:text="${o.status}"></span>
+                    <span th:if="${o.status == 'PENDING'}"    class="badge badge-orange" th:text="${o.status}"></span>
+                    <span th:unless="${o.status == 'DELIVERED' or o.status == 'CANCELLED' or o.status == 'PENDING'}"
+                          class="badge badge-blue" th:text="${o.status}"></span>
+                </td>
+                <td style="color:var(--muted);font-size:13px;"
+                    th:text="${#temporals.format(o.orderTime, 'dd MMM yyyy, hh:mm a')}">
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
