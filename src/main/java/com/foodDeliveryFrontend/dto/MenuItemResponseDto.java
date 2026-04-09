@@ -12,7 +12,7 @@ public class MenuItemResponseDto {
 
     @JsonProperty("itemDescription")
     private String description;
-
+    @JsonProperty("itemPrice")
     private Double price;
     private Boolean available;
     private String category;

@@ -86,25 +86,25 @@
             <thead>
             <tr>
                 <th>Item</th>
-                <th>Category</th>
+<!--                <th>Category</th>-->
                 <th>Description</th>
                 <th>Price</th>
-                <th>Available</th>
+<!--                <th>Available</th>-->
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="item : ${menuItems}">
                 <td style="font-weight:600;" th:text="${item.itemName}"></td>
-                <td><span class="badge badge-blue" th:text="${item.category}"></span></td>
+<!--                <td><span class="badge badge-blue" th:text="${item.category}"></span></td>-->
                 <td style="color:var(--muted);font-size:13px;" th:text="${item.description}"></td>
                 <td style="color:var(--accent);font-weight:700;font-family:'Syne',sans-serif;">
                     ₹<span th:text="${item.price}"></span>
                 </td>
-                <td>
-                    <span th:if="${item.available}" class="badge badge-green">✓ Yes</span>
-                    <span th:unless="${item.available}" class="badge badge-red">✗ No</span>
-                </td>
+<!--                <td>-->
+<!--                    <span th:if="${item.available}" class="badge badge-green">✓ Yes</span>-->
+<!--                    <span th:unless="${item.available}" class="badge badge-red">✗ No</span>-->
+<!--                </td>-->
             </tr>
             </tbody>
 
